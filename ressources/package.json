@@ -1,24 +1,30 @@
 {
-  "name": "temporaryFiles",
+  "name": "secret-manager-client",
   "version": "0.0.1",
-  "description": "",
+  "description": "The official client library to the Secret Manager Service for the Browser and Node.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "secret-manager",
+    "crypto",
+    "ed25519"
+  ],
   "author": "Lenard Frommelt lenard.frommelt@gne.or.at",
   "license": "Unlicense",
-  "bin": {
-    "temporaryFiles": "./index.js"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://.git"
+    "url": "git+https://github.com/JhonnyJason/secret-manager-client-output.git"
   },
   "bugs": {
-    "url": "https://"
+    "url": "https://github.com/JhonnyJason/secret-manager-client/issues"
   },
-  "homepage": "https://",
-  "dependencies": {}
+  "homepage": "https://github.com/JhonnyJason/secret-manager-client-output#readme",
+  "dependencies": {
+    "noble-ed25519": "^1.0.2",
+    "node-fetch": "^2.6.1",
+    "secret-manager-crypto-utils": "0.0.5",
+    "thingy-byte-utils": "0.0.3"
+  }
 }
