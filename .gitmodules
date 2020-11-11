@@ -1,3 +1,6 @@
 [submodule "source/secretmanagerinterface"]
 	path = source/secretmanagerinterface
 	url = git@github.com:JhonnyJason/network-sources-secretmanagerinterface.git
+[submodule "source/clientmodule"]
+	path = source/clientmodule
+	url = git@github.com:JhonnyJason/secret-manager-client-sources-clientmodule.git
