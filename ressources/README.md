@@ -1,31 +1,70 @@
-# noname - 
+# Secret Manager Client 
 
 # Why?
+For convenient usage of the Secret Manager Service from browser application, node-clis or node services.
 
 # What?
+The convenience Library to interact with the Secret Manager Service - deals with the encryption parts so you could use it directly as a simple remote data-store for your secrets.
 
-# How?
-Requirements
-------------
+- The [Secret Manager Documentation](https://hackmd.io/PZjpRfzPSBCqS-8K54x2jA?view)
+- The [Secret Manager Code](https://github.com/JhonnyJason/secret-manager-service)
+- The [Interface Specification](https://hackmd.io/EtJSEnxjTVOOvRJdWGJlYw?view)
 
-Installation
-------------
+The exported object is a factory for clients. All methods are async.
 
-
-Usage
------
-
+If we donot provide keys when creating a client, then it would create new ones.
 
 Current Functionality
 ---------------------
 
+```coffeescript
+clientFactory = require("secret-manager-client")
+
+## create a client
+client = await clientFactory.createClient( privateKey, publicKey, serverURL )
+clientFactory.createClient( StringHex, StringHex, String )
+
+# get produced keys
+privateKey = client.secretKeyHex
+publicKey = client.publicKeyHex
+
+## client methods
+client.updateServerURL( newServerURL )
+client.updateServerURL( String )
+
+
+client.getSecretSpace()
+
+client.getSecret( secretId )
+client.getSecret( String )
+
+client.getSecretFrom( secretId, setterNodeId ) # a secret setterNodeId has set for us
+client.getSecretFrom( String, StringHex )
+
+
+client.setSecret( secretId, secret )
+client.setSecret( String, String )
+
+client.deleteSecret( secretId )
+client.deleteSecret( String )
+
+
+client.acceptSecretsFrom( fromNodeId ) # only then fromNodeId may set secrets for us
+client.acceptSecretsFrom( StringHex )
+
+client.stopAcceptSecretsFrom( fromNodeId )
+client.stopAcceptSecretsFrom( StringHex )
+
+
+client.shareSecretTo( shareToNodeId, secretId, secret ) # set a secret for shareToNodeId
+client.shareSecretTo( StringHex, String, String )
+
+client.deleteSharedSecret( sharedToNodeId, secretId )
+client.deleteSharedSecret( StringHex, String )
+```
+
 
 ---
-
-# Further steps
-
-- ...
-
 
 All sorts of inputs are welcome, thanks!
 
