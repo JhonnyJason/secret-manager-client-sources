@@ -1,9 +1,6 @@
 [submodule "source/secretmanagerinterface"]
 	path = source/secretmanagerinterface
 	url = git@github.com:JhonnyJason/network-sources-secretmanagerinterface.git
-[submodule "source/clientmodule"]
-	path = source/clientmodule
-	url = git@github.com:JhonnyJason/secret-manager-client-sources-clientmodule.git
 [submodule "source/validatabletimestampmodule"]
 	path = source/validatabletimestampmodule
 	url = git@github.com:JhonnyJason/thingy-sources-validatabletimestampmodule.git
