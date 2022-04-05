@@ -4,9 +4,6 @@
 [submodule "source/clientmodule"]
 	path = source/clientmodule
 	url = git@github.com:JhonnyJason/secret-manager-client-sources-clientmodule.git
-[submodule "source/networkbrowser"]
-	path = source/networkbrowser
-	url = git@github.com:JhonnyJason/network-sources-networkbrowser.git
-[submodule "source/networknode"]
-	path = source/networknode
-	url = git@github.com:JhonnyJason/network-sources-networknode.git
+[submodule "source/validatabletimestampmodule"]
+	path = source/validatabletimestampmodule
+	url = git@github.com:JhonnyJason/thingy-sources-validatabletimestampmodule.git
