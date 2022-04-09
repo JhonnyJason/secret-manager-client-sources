@@ -1,18 +1,21 @@
 ############################################################
 import { Client } from "./client.js"
 import * as noble from "@noble/ed25519"
-import tbut from "thingy-byte-utils"
+import * as tbut from "thingy-byte-utils"
 
 ############################################################
 newSecretBytes = noble.utils.randomPrivateKey
+bytesToHex = noble.utils.bytesToHex
 
 ############################################################
 export createClient = (secretKeyHex, publicKeyHex, serverURL) ->
     if !secretKeyHex
-        secretKeyHex = tbut.bytesToHex(newSecretBytes())
-        publicKeyHex = await noble.getPublicKey(secretKeyHex)
+        secretKeyHex = bytesToHex(newSecretBytes())
+        publicKey = await noble.getPublicKey(secretKeyHex)        
+        publicKeyHex = bytesToHex(publicKey)
     if !publicKeyHex
-        publicKeyHex = await noble.getPublicKey(secretKeyHex)
+        publicKey = await noble.getPublicKey(secretKeyHex)        
+        publicKeyHex = bytesToHex(publicKey)
     return new Client(secretKeyHex, publicKeyHex, serverURL)
 
 
