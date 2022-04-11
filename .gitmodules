@@ -1,6 +1,3 @@
 [submodule "source/validatabletimestampmodule"]
 	path = source/validatabletimestampmodule
 	url = git@github.com:JhonnyJason/thingy-sources-validatabletimestampmodule.git
-[submodule "source/secretmanagementinterface"]
-	path = source/secretmanagementinterface
-	url = git@github.com:JhonnyJason/secretmanagementinterface.git
