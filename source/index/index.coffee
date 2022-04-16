@@ -1,6 +1,6 @@
 ############################################################
 import { Client } from "./client.js"
-import * as noble from "@noble/ed25519"
+import * as secUtl from "secret-manager-crypto-utils"
 import * as tbut from "thingy-byte-utils"
 
 ############################################################
@@ -35,7 +35,7 @@ export createClient = (secretKeyHex, publicKeyHex, serverURL) ->
 ensureHexKey = (key) ->
     if key instanceof Uint8Array
         if key.length != 32 then throw new Error("Invalid key length!")
-        key = bytesToHex(key)
+        key = tbut.bytesToHex(key)
     if typeof key != "string" then throw new Error("Invalid type, hexString or Uint8Array expected!")
     if key.charAt(1) == "x" then key = key.slice(2)
     if key.length != 64 then throw new Error("Invalid key length!")
