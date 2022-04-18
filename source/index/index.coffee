@@ -4,10 +4,6 @@ import * as secUtl from "secret-manager-crypto-utils"
 import * as tbut from "thingy-byte-utils"
 
 ############################################################
-newSecretBytes = noble.utils.randomPrivateKey
-bytesToHex = noble.utils.bytesToHex
-
-############################################################
 hexChars = "0123456789abcdef"
 hexMap = {}
 hexMap[c] = true for c in hexChars
@@ -16,17 +12,15 @@ hexMap[c] = true for c in hexChars
 ############################################################
 export createClient = (secretKeyHex, publicKeyHex, serverURL) ->
     if !secretKeyHex
-        secretKeyHex = bytesToHex(newSecretBytes())
-        publicKey = await noble.getPublicKey(secretKeyHex)        
-        publicKeyHex = bytesToHex(publicKey)
+        kp = await secUtl.createKeyPairHex()
+        return new Client(kp.secretKeyHex, kp.publicKeyHex, serverURL)
     else secretKeyHex = ensureHexKey(secretKeyHex)
+    
     if !publicKeyHex
-        publicKey = await noble.getPublicKey(secretKeyHex)        
-        publicKeyHex = bytesToHex(publicKey)
+        publicKeyHex = await secUtl.createPublicKeyHex(secretKeyHex)        
     else
         publicKeyHex = ensureHexKey(publicKeyHex)
-        pbTest = await noble.getPublicKey(secretKeyHex)
-        pbTestHex = bytesToHex(pbTest)
+        pbTestHex = await secUtl.createPublicKeyHex(secretKeyHex)
         if publicKeyHex != pbTestHex then throw new Error("PublicKey does not fit secretKey!")
     return new Client(secretKeyHex, publicKeyHex, serverURL)
 
