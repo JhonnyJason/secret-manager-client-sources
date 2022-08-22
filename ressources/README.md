@@ -1,36 +1,40 @@
 # Secret Manager Client 
 
-# Why?
-For convenient usage of the Secret Manager Service from browser application, node-clis or node services.
+## Background
+On the journey to a simplemost, accessible and open authentication-model the idea of the [Secret Manager](https://hackmd.io/PZjpRfzPSBCqS-8K54x2jA?view) has been conceived. It is a small contained service which exclusivly deals with storing and sharing secrets among its' served clients. Every component like services or user-interfaces will use this Secret Manager to exchange critical secrets for authentication.
 
-# What?
-The convenience Library to interact with the Secret Manager Service - deals with the encryption parts so you could use it directly as a simple remote data-store for your secrets.
+This is convenience Library to interact with the Secret Manager Service. It deals with the encryption parts so you could use it directly as a simple remote data-store for your secrets.
 
-- The [Secret Manager Documentation](https://hackmd.io/PZjpRfzPSBCqS-8K54x2jA?view)
-- The [Secret Manager Code](https://github.com/JhonnyJason/secret-manager-service)
 - The [Interface Specification](https://hackmd.io/EtJSEnxjTVOOvRJdWGJlYw?view)
 
-The exported object is a factory for clients. All methods are async.
-
-If we donot provide keys when creating a client, then it would create new ones.
 
 Current Functionality
 ---------------------
 
+The exported object is a factory for clients. All itsmethods are async.
+
+*Note: when we create the client the createClient function is synchronous. This means we could immediately proceed using the client. However this means there wasn't any successful server-communication yet, neither would the keys be ready necessarily.*
+
+Ensure the keys are ready - `await client.keysReady`
+Ensure we had successful communication with the server - `await client.ready`
+
+*Note: when any regular async method is being used, then it would automatically await for client.ready.*
+
 ```coffeescript
-clientFactory = require("secret-manager-client")
+import { createClient } from "secret-manager-client"
 
 ## create a client
-client = await clientFactory.createClient( privateKey, publicKey, serverURL )
-clientFactory.createClient( StringHex, StringHex, String )
+client = await createClient( options )
+ClientObject = createClient( OptionsObject )
 
 # get produced keys
+await client.keysReady
 privateKey = client.secretKeyHex
 publicKey = client.publicKeyHex
 
 ## client methods
-client.updateServerURL( newServerURL )
-client.updateServerURL( String )
+client.updateServerURL( newServerURL, authCode )
+client.updateServerURL( String, StringHex )
 
 
 client.getSecretSpace()
@@ -63,6 +67,34 @@ client.deleteSharedSecret( sharedToNodeId, secretId )
 client.deleteSharedSecret( StringHex, String )
 ```
 
+### createClient( options )
+The `options` look like this:
+```js
+{
+    "secretKeyHex": "...",
+    "publicKeyHex": "...",
+    "serverURL": "...",
+    "closureDate": "...",
+    "authCode": "..."
+}
+```
+
+The `createClient` may work in 3 ways:
+
+1. We already have keys and the server knows about it (recreate an otherwise existing client)
+2. We use self-defined keys which the server does not know yet 
+3. We create a client without defining keys
+
+
+For 1.) we donot neeed to provide an `authCode`. For 2.) and 3.) we require an authCode, as this will create a new secret space on the server. If in this case no authCode is provided, then the client would set a default authCode as `deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef` - it is then totally dependent on the specific service and how the maintainer configured it, if it would accept this new client or not. Potentially receiving the error: "No new anonymous clients are accepted!"
+
+
+The authCode has the same requirements as the keys. Should be 32bytes long and encoded in hex -> string of 64 hex characters.
+
+Strictly speaking, only the serverURL is mandatory.
+
+The `createClient` functionn is synchronous - so it would immediately return a client object. However potentially the client could not be constructed, because of server-side issues or the key-generation has not been completed. 
+
 
 ---
 
@@ -72,42 +104,4 @@ All sorts of inputs are welcome, thanks!
 
 # License
 
-## The Unlicense JhonnyJason style
-
-- Information has no ownership.
-- Information only has memory to reside in and relations to be meaningful.
-- Information cannot be stolen. Only shared or destroyed.
-
-And you wish it has been shared before it is destroyed.
-
-The one claiming copyright or intellectual property either is really evil or probably has some insecurity issues which makes him blind to the fact that he also just connected information which was freely available to him.
-
-The value is not in him who "created" the information the value is what is being done with the information.
-So the restriction and friction of the informations' usage is exclusively reducing value overall.
-
-The only preceived "value" gained due to restriction is actually very similar to the concept of blackmail (power gradient, control and dependency).
-
-The real problems to solve are all in the "reward/credit" system and not the information distribution. Too much value is wasted because of not solving the right problem.
-
-I can only contribute in that way - none of the information is "mine" everything I "learned" I actually also copied.
-I only connect things to have something I feel is missing and share what I consider useful. So please use it without any second thought and please also share whatever could be useful for others. 
-
-I also could give credits to all my sources - instead I use the freedom and moment of creativity which lives therein to declare my opinion on the situation. 
-
-*Unity through Intelligence.*
-
-We cannot subordinate us to the suboptimal dynamic we are spawned in, just because power is actually driving all things around us.
-In the end a distributed network of intelligence where all information is transparently shared in the way that everyone has direct access to what he needs right now is more powerful than any brute power lever.
-
-The same for our programs as for us.
-
-It also is peaceful, helpful, friendly - decent. How it should be, because it's the most optimal solution for us human beings to learn, to connect to develop and evolve - not being excluded, let hanging and destroy oneself or others.
-
-If we really manage to build an real AI which is far superior to us it will unify with this network of intelligence.
-We never have to fear superior intelligence, because it's just the better engine connecting information to be most understandable/usable for the other part of the intelligence network.
-
-The only thing to fear is a disconnected unit without a sufficient network of intelligence on its own, filled with fear, hate or hunger while being very powerful. That unit needs to learn and connect to develop and evolve then.
-
-We can always just give information and hints :-) The unit needs to learn by and connect itself.
-
-Have a nice day! :D
+[Unlicense JhonnyJason style](https://hackmd.io/nCpLO3gxRlSmKVG3Zxy2hA?view)
