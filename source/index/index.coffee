@@ -26,8 +26,8 @@ export createClient = (o) ->
         else publicKeyHex = null
 
         if o.authCode?
-            try authCode = ensure32BytesHex(options.authCode)
-            catch err then throw new Error("error occured in snsureing the correct format of authCode!\n: "+err.message)
+            try authCode = ensure32BytesHex(o.authCode)
+            catch err then throw new Error("error occured in ensureing the correct format of authCode!\n: "+err.message)
         else authCode = null
     
     else
@@ -36,19 +36,22 @@ export createClient = (o) ->
         publicKeyHex = null
 
         if o.authCode? 
-            try authCode = ensure32BytesHex(options.authCode)
-            catch err then throw new Error("error occured in snsureing the correct format of authCode!\n: "+err.message)
+            try authCode = ensure32BytesHex(o.authCode)
+            catch err then throw new Error("error occured in ensureing the correct format of authCode!\n: "+err.message)
         else authCode = defaultAuthCode
 
     
     if o.closureDate? then closureDate = o.closureDate
     else closureDate = null
 
+    console.log("hello!")
+
     return new Client(secretKeyHex, publicKeyHex, o.serverURL, closureDate, authCode)
 
 
 ############################################################
 ensure32BytesHex = (key) ->
+    # real code to check on client already
     if key instanceof Uint8Array
         if key.length != 32 then throw new Error("Invalid length!")
         key = tbut.bytesToHex(key)
