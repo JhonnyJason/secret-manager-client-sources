@@ -42,8 +42,10 @@ client.getSecretSpace()
 client.getSecret( secretId )
 client.getSecret( String )
 
-client.getSecretFrom( secretId, setterNodeId ) # a secret setterNodeId has set for us
-client.getSecretFrom( String, StringHex )
+# Note incompatibility with older version... :-(
+# client.getSecretFrom( secretId, setterNodeId ) # a secret setterNodeId has set for us - this is the old version
+client.getSecretFrom( fromdId, secretId ) # a secret fromId has set for us
+client.getSecretFrom( StringHex, String )
 
 
 client.setSecret( secretId, secret )
