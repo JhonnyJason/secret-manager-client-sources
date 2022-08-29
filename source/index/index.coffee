@@ -44,8 +44,6 @@ export createClient = (o) ->
     if o.closureDate? then closureDate = o.closureDate
     else closureDate = null
 
-    console.log("hello!")
-
     return new Client(secretKeyHex, publicKeyHex, o.serverURL, closureDate, authCode)
 
 
