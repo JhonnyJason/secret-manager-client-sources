@@ -7,6 +7,10 @@ This is convenience Library to interact with the Secret Manager Service. It deal
 
 - The [Interface Specification](https://hackmd.io/EtJSEnxjTVOOvRJdWGJlYw?view)
 
+Requirements
+---------------------
+- nodejs >= 18
+- ESM importability
 
 Current Functionality
 ---------------------
