@@ -1,6 +1,6 @@
 {
     "name": "secret-manager-client",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "The official client library to the Secret Manager Service for the Browser and Node.",
     "main": "index.js",
     "scripts": {
@@ -24,7 +24,7 @@
     "dependencies": {
         "secret-manager-crypto-utils": "^0.1.1",
         "thingy-byte-utils": "0.0.7",
-        "thingy-network-base": "^0.0.3"
+        "thingy-network-base": "^0.0.4"
     },
     "type": "module"
 }
