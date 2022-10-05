@@ -1,6 +1,6 @@
 {
     "name": "secret-manager-client",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "The official client library to the Secret Manager Service for the Browser and Node.",
     "main": "index.js",
     "scripts": {
